@@ -1,12 +1,12 @@
 package dto
 
 type EventPageOptions struct {
-	DeviceLanguage *string `json:"device_language"`
-	EventName      *string `json:"event_name"`
-	Incognito      *bool   `json:"incognito"`
-	IP             *string `json:"ip"`
-	EventType      *string `json:"event_type"`
-	Order          *string `json:"order"`
-	Limit          uint    `json:"limit"`
-	Offset         uint    `json:"offset"`
+	DeviceLanguage *string `query:"device_language"`
+	EventName      *string `query:"event_name"`
+	Incognito      *bool   `query:"incognito"`
+	IP             *string `query:"ip"`
+	EventType      *string `query:"event_type"`
+	Order          *string `query:"order"`
+	Limit          uint    `query:"limit"`
+	Offset         uint    `query:"offset"`
 }

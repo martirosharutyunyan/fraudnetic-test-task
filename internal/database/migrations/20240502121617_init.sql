@@ -1,5 +1,7 @@
 CREATE KEYSPACE fraudnetic WITH replication = {'class': 'NetworkTopologyStrategy', 'replication_factor' : 1};
 
+USE fraudnetic;
+
 CREATE TABLE events (
      id uuid,
      browser_fingerprint bigint,
@@ -23,5 +25,5 @@ CREATE TABLE events (
      utm text,
      webgl_fingerprint bigint,
      PRIMARY KEY (id, created_at)
- )
+ );
 

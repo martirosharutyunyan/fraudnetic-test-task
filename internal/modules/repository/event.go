@@ -10,7 +10,6 @@ import (
 	"github.com/scylladb/gocqlx/v3"
 	"github.com/scylladb/gocqlx/v3/qb"
 	"github.com/scylladb/gocqlx/v3/table"
-	"log"
 	"time"
 )
 
@@ -94,7 +93,6 @@ func (e *Event) Get(ctx context.Context, eventPageDto *dto.EventPageOptions) (*d
 
 	var count int
 	countStmt, names := qb.Select("events").CountAll().ToCql()
-	log.Println(countStmt)
 	err := e.db.ContextQuery(ctx, countStmt, names).Scan(&count)
 	if err != nil {
 		return nil, httpErrors.NewBadRequestError(err.Error())
