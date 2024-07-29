@@ -1,0 +1,393 @@
+definitions:
+  createDtos.AddressDetail:
+    properties:
+      addressId:
+        type: string
+      detail:
+        type: string
+    required:
+    - addressId
+    - detail
+    type: object
+  createDtos.Customer:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 10
+        type: string
+      surname:
+        type: string
+    required:
+    - age
+    - email
+    - password
+    type: object
+  createDtos.CustomerAddress:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  dtos.AddressDetail:
+    properties:
+      address:
+        $ref: '#/definitions/ent.CustomerAddressEntity'
+      createdAt:
+        type: string
+      customerAddressId:
+        type: string
+      detail:
+        type: string
+      id:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dtos.Customer:
+    properties:
+      addresses:
+        items:
+          $ref: '#/definitions/dtos.CustomerAddress'
+        type: array
+      age:
+        type: integer
+      createdAt:
+        type: string
+      email:
+        type: string
+      fullName:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      status:
+        description: Status holds the value of the "status" field.
+        type: string
+      surname:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dtos.CustomerAddress:
+    properties:
+      address:
+        type: string
+      createdAt:
+        type: string
+      customer:
+        $ref: '#/definitions/dtos.Customer'
+      customerId:
+        type: string
+      id:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dtos.JWTToken:
+    properties:
+      token:
+        type: string
+    type: object
+  dtos.Login:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 10
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dtos.VerifyEmail:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+    required:
+    - code
+    - email
+    type: object
+  ent.AddressDetailEntity:
+    properties:
+      created_at:
+        description: CreatedAt holds the value of the "created_at" field.
+        type: string
+      customer_address_id:
+        description: CustomerAddressID holds the value of the "customer_address_id"
+          field.
+        type: string
+      detail:
+        description: Detail holds the value of the "detail" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.AddressDetailEntityEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the AddressDetailEntityQuery when eager-loading is set.
+      id:
+        description: ID of the ent.
+        type: string
+      updated_at:
+        description: UpdatedAt holds the value of the "updated_at" field.
+        type: string
+    type: object
+  ent.AddressDetailEntityEdges:
+    properties:
+      address:
+        $ref: '#/definitions/ent.CustomerAddressEntity'
+        description: Address holds the value of the address edge.
+    type: object
+  ent.CustomerAddressEntity:
+    properties:
+      created_at:
+        description: CreatedAt holds the value of the "created_at" field.
+        type: string
+      customer_id:
+        description: CustomerID holds the value of the "customer_id" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.CustomerAddressEntityEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the CustomerAddressEntityQuery when eager-loading is set.
+      id:
+        description: ID of the ent.
+        type: string
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+      updated_at:
+        description: UpdatedAt holds the value of the "updated_at" field.
+        type: string
+    type: object
+  ent.CustomerAddressEntityEdges:
+    properties:
+      customer:
+        $ref: '#/definitions/ent.CustomerEntity'
+        description: Customer holds the value of the customer edge.
+      details:
+        description: Details holds the value of the details edge.
+        items:
+          $ref: '#/definitions/ent.AddressDetailEntity'
+        type: array
+    type: object
+  ent.CustomerCodeEntity:
+    properties:
+      code:
+        description: Code holds the value of the "code" field.
+        type: string
+      created_at:
+        description: CreatedAt holds the value of the "created_at" field.
+        type: string
+      customer_id:
+        description: CustomerID holds the value of the "customer_id" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.CustomerCodeEntityEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the CustomerCodeEntityQuery when eager-loading is set.
+      id:
+        description: ID of the ent.
+        type: string
+      updated_at:
+        description: UpdatedAt holds the value of the "updated_at" field.
+        type: string
+    type: object
+  ent.CustomerCodeEntityEdges:
+    properties:
+      customer:
+        $ref: '#/definitions/ent.CustomerEntity'
+        description: Customer holds the value of the customer edge.
+    type: object
+  ent.CustomerEntity:
+    properties:
+      age:
+        description: Age holds the value of the "age" field.
+        type: integer
+      created_at:
+        description: CreatedAt holds the value of the "created_at" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.CustomerEntityEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the CustomerEntityQuery when eager-loading is set.
+      email:
+        description: Email holds the value of the "email" field.
+        type: string
+      id:
+        description: ID of the ent.
+        type: string
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+      password:
+        description: Password holds the value of the "password" field.
+        type: string
+      status:
+        description: Status holds the value of the "status" field.
+        type: string
+      surname:
+        description: Surname holds the value of the "surname" field.
+        type: string
+      updated_at:
+        description: UpdatedAt holds the value of the "updated_at" field.
+        type: string
+    type: object
+  ent.CustomerEntityEdges:
+    properties:
+      addresses:
+        description: Addresses holds the value of the addresses edge.
+        items:
+          $ref: '#/definitions/ent.CustomerAddressEntity'
+        type: array
+      code:
+        $ref: '#/definitions/ent.CustomerCodeEntity'
+        description: Code holds the value of the code edge.
+    type: object
+  updateDtos.Customer:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      name:
+        type: string
+      status:
+        description: Status holds the value of the "status" field.
+        type: string
+      surname:
+        type: string
+    required:
+    - age
+    - email
+    - name
+    - surname
+    type: object
+info:
+  contact: {}
+paths:
+  /address-details:
+    post:
+      description: create customer address detail
+      parameters:
+      - description: body
+        in: body
+        name: CreateCustomerDto
+        required: true
+        schema:
+          $ref: '#/definitions/createDtos.AddressDetail'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.AddressDetail'
+      security:
+      - BearerAuth: []
+  /auth/login:
+    post:
+      description: login
+      parameters:
+      - description: login
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.Login'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.JWTToken'
+  /auth/me:
+    get:
+      description: auth me
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.Customer'
+      security:
+      - BearerAuth: []
+  /auth/sign-up:
+    post:
+      description: create customer
+      parameters:
+      - description: body
+        in: body
+        name: CreateCustomerDto
+        required: true
+        schema:
+          $ref: '#/definitions/createDtos.Customer'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.JWTToken'
+  /auth/verify:
+    put:
+      description: verify email
+      parameters:
+      - description: body
+        in: body
+        name: VerifyEmailDto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.VerifyEmail'
+      responses:
+        "200":
+          description: OK
+  /customer:
+    put:
+      description: update
+      parameters:
+      - description: body
+        in: body
+        name: UpdateCustomerDto
+        required: true
+        schema:
+          $ref: '#/definitions/updateDtos.Customer'
+      responses:
+        "200":
+          description: OK
+      security:
+      - BearerAuth: []
+  /customer-address:
+    post:
+      description: create customerAddressDto
+      parameters:
+      - description: body
+        in: body
+        name: CreateCustomerDto
+        required: true
+        schema:
+          $ref: '#/definitions/createDtos.CustomerAddress'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CustomerAddress'
+      security:
+      - BearerAuth: []
+  /health-checker:
+    post:
+      description: HealthChecker
+      responses:
+        "200":
+          description: OK
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

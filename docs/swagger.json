@@ -1,0 +1,583 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/address-details": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "create customer address detail",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "CreateCustomerDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createDtos.AddressDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.AddressDetail"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "description": "login",
+                "parameters": [
+                    {
+                        "description": "login",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.JWTToken"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "auth me",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.Customer"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/sign-up": {
+            "post": {
+                "description": "create customer",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "CreateCustomerDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createDtos.Customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.JWTToken"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/verify": {
+            "put": {
+                "description": "verify email",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "VerifyEmailDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.VerifyEmail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/customer": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "update",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "UpdateCustomerDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateDtos.Customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/customer-address": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "create customerAddressDto",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "CreateCustomerDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createDtos.CustomerAddress"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CustomerAddress"
+                        }
+                    }
+                }
+            }
+        },
+        "/health-checker": {
+            "post": {
+                "description": "HealthChecker",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "createDtos.AddressDetail": {
+            "type": "object",
+            "required": [
+                "addressId",
+                "detail"
+            ],
+            "properties": {
+                "addressId": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                }
+            }
+        },
+        "createDtos.Customer": {
+            "type": "object",
+            "required": [
+                "age",
+                "email",
+                "password"
+            ],
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 10
+                },
+                "surname": {
+                    "type": "string"
+                }
+            }
+        },
+        "createDtos.CustomerAddress": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.AddressDetail": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/ent.CustomerAddressEntity"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "customerAddressId": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.Customer": {
+            "type": "object",
+            "properties": {
+                "addresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dtos.CustomerAddress"
+                    }
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Status holds the value of the \"status\" field.",
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.CustomerAddress": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/dtos.Customer"
+                },
+                "customerId": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.JWTToken": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.Login": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 10
+                }
+            }
+        },
+        "dtos.VerifyEmail": {
+            "type": "object",
+            "required": [
+                "code",
+                "email"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "ent.AddressDetailEntity": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "CreatedAt holds the value of the \"created_at\" field.",
+                    "type": "string"
+                },
+                "customer_address_id": {
+                    "description": "CustomerAddressID holds the value of the \"customer_address_id\" field.",
+                    "type": "string"
+                },
+                "detail": {
+                    "description": "Detail holds the value of the \"detail\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the AddressDetailEntityQuery when eager-loading is set.",
+                    "$ref": "#/definitions/ent.AddressDetailEntityEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "UpdatedAt holds the value of the \"updated_at\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.AddressDetailEntityEdges": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "Address holds the value of the address edge.",
+                    "$ref": "#/definitions/ent.CustomerAddressEntity"
+                }
+            }
+        },
+        "ent.CustomerAddressEntity": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "CreatedAt holds the value of the \"created_at\" field.",
+                    "type": "string"
+                },
+                "customer_id": {
+                    "description": "CustomerID holds the value of the \"customer_id\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the CustomerAddressEntityQuery when eager-loading is set.",
+                    "$ref": "#/definitions/ent.CustomerAddressEntityEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "UpdatedAt holds the value of the \"updated_at\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.CustomerAddressEntityEdges": {
+            "type": "object",
+            "properties": {
+                "customer": {
+                    "description": "Customer holds the value of the customer edge.",
+                    "$ref": "#/definitions/ent.CustomerEntity"
+                },
+                "details": {
+                    "description": "Details holds the value of the details edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.AddressDetailEntity"
+                    }
+                }
+            }
+        },
+        "ent.CustomerCodeEntity": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Code holds the value of the \"code\" field.",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "CreatedAt holds the value of the \"created_at\" field.",
+                    "type": "string"
+                },
+                "customer_id": {
+                    "description": "CustomerID holds the value of the \"customer_id\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the CustomerCodeEntityQuery when eager-loading is set.",
+                    "$ref": "#/definitions/ent.CustomerCodeEntityEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "UpdatedAt holds the value of the \"updated_at\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.CustomerCodeEntityEdges": {
+            "type": "object",
+            "properties": {
+                "customer": {
+                    "description": "Customer holds the value of the customer edge.",
+                    "$ref": "#/definitions/ent.CustomerEntity"
+                }
+            }
+        },
+        "ent.CustomerEntity": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "description": "Age holds the value of the \"age\" field.",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "CreatedAt holds the value of the \"created_at\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the CustomerEntityQuery when eager-loading is set.",
+                    "$ref": "#/definitions/ent.CustomerEntityEdges"
+                },
+                "email": {
+                    "description": "Email holds the value of the \"email\" field.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name holds the value of the \"name\" field.",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password holds the value of the \"password\" field.",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Status holds the value of the \"status\" field.",
+                    "type": "string"
+                },
+                "surname": {
+                    "description": "Surname holds the value of the \"surname\" field.",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "UpdatedAt holds the value of the \"updated_at\" field.",
+                    "type": "string"
+                }
+            }
+        },
+        "ent.CustomerEntityEdges": {
+            "type": "object",
+            "properties": {
+                "addresses": {
+                    "description": "Addresses holds the value of the addresses edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.CustomerAddressEntity"
+                    }
+                },
+                "code": {
+                    "description": "Code holds the value of the code edge.",
+                    "$ref": "#/definitions/ent.CustomerCodeEntity"
+                }
+            }
+        },
+        "updateDtos.Customer": {
+            "type": "object",
+            "required": [
+                "age",
+                "email",
+                "name",
+                "surname"
+            ],
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Status holds the value of the \"status\" field.",
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
