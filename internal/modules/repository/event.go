@@ -21,11 +21,21 @@ type Event struct {
 var _ domain.EventRepo = (*Event)(nil)
 
 func (e *Event) Insert(ctx context.Context, createEventDto *dto.CreateEvent) (*entity.Event, error) {
+	createdAt, err := time.Parse(time.DateTime, createEventDto.CreatedAt)
+	if err != nil {
+		return nil, httpErrors.NewUnprocessableEntityError(err.Error())
+	}
+
+	updatedAt, err := time.Parse(time.DateTime, createEventDto.UpdatedAt)
+	if err != nil {
+		return nil, httpErrors.NewUnprocessableEntityError(err.Error())
+	}
+
 	event := &entity.Event{
 		ID:                 uuid.New().String(),
 		BrowserFingerprint: createEventDto.BrowserFingerprint,
 		CanvasFingerprint:  createEventDto.CanvasFingerprint,
-		CreatedAt:          time.Now(),
+		CreatedAt:          createdAt,
 		DeviceLanguage:     createEventDto.DeviceLanguage,
 		DeviceTimezone:     createEventDto.DeviceTimezone,
 		EventName:          createEventDto.EventName,
@@ -38,7 +48,7 @@ func (e *Event) Insert(ctx context.Context, createEventDto *dto.CreateEvent) (*e
 		Session:            createEventDto.Session,
 		Status:             createEventDto.Status,
 		Storage:            createEventDto.Storage,
-		UpdatedAt:          time.Now(),
+		UpdatedAt:          updatedAt,
 		UserAgent:          createEventDto.UserAgent,
 		UserId:             createEventDto.UserId,
 		Utm:                createEventDto.Utm,
@@ -93,7 +103,7 @@ func (e *Event) Get(ctx context.Context, eventPageDto *dto.EventPageOptions) (*d
 
 	var count int
 	countStmt, names := qb.Select("events").CountAll().ToCql()
-	err := e.db.ContextQuery(ctx, countStmt, names).Scan(&count)
+	err := e.db.ContextQuery(ctx, countStmt, names).BindMap(values).Scan(&count)
 	if err != nil {
 		return nil, httpErrors.NewBadRequestError(err.Error())
 	}
