@@ -55,7 +55,7 @@ func (e *Event) Insert(ctx context.Context, createEventDto *dto.CreateEvent) (*e
 		WebglFingerprint:   createEventDto.WebglFingerprint,
 	}
 
-	err := e.db.Query(e.table.Insert()).BindStruct(event).WithContext(ctx).Exec()
+	err = e.db.Query(e.table.Insert()).BindStruct(event).WithContext(ctx).Exec()
 	if err != nil {
 		return nil, httpErrors.NewBadRequestError(err.Error())
 	}
